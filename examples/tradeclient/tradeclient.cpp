@@ -48,7 +48,7 @@ int main( int argc, char** argv )
   {
     FIX::SessionSettings settings( file );
 
-    Application application;
+    Application application( settings );
     FIX::FileStoreFactory storeFactory( settings );
     FIX::ScreenLogFactory logFactory( settings );
     FIX::SocketInitiator initiator( application, storeFactory, settings, logFactory );
