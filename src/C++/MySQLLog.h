@@ -63,15 +63,15 @@ public:
   { m_eventTable = eventTable; }
 
   void onIncoming( const std::string& value )
-  { insert( m_incomingTable, value ); }
+  { insert( m_incomingTable, value, 1 ); }
   void onOutgoing( const std::string& value )
-  { insert( m_outgoingTable, value ); }
+  { insert( m_outgoingTable, value, 0 ); }
   void onEvent( const std::string& value )
-  { insert( m_eventTable, value ); }
+  { insert( m_eventTable, value, 0 ); }
 
 private:
   void init();
-  void insert( const std::string& table, const std::string value );
+  void insert( const std::string& table, const std::string value, const int io );
 
   std::string m_incomingTable;
   std::string m_outgoingTable;

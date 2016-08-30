@@ -227,7 +227,7 @@ void MySQLLog::backup()
 {
 }
 
-void MySQLLog::insert( const std::string& table, const std::string value )
+void MySQLLog::insert( const std::string& table, const std::string value, const int io )
 {
   UtcTimeStamp time;
   int year, month, day, hour, minute, second, millis;
@@ -250,9 +250,17 @@ void MySQLLog::insert( const std::string& table, const std::string value )
   if( m_pSessionID )
   {
     queryString
-    << "\"" << m_pSessionID->getBeginString().getValue() << "\","
-    << "\"" << m_pSessionID->getSenderCompID().getValue() << "\","
-    << "\"" << m_pSessionID->getTargetCompID().getValue() << "\",";
+    << "\"" << m_pSessionID->getBeginString().getValue() << "\",";
+  
+    if( io )
+      queryString
+      << "\"" << m_pSessionID->getTargetCompID().getValue() << "\","
+      << "\"" << m_pSessionID->getSenderCompID().getValue() << "\",";
+    else
+      queryString
+      << "\"" << m_pSessionID->getSenderCompID().getValue() << "\","
+      << "\"" << m_pSessionID->getTargetCompID().getValue() << "\",";
+
     if( m_pSessionID->getSessionQualifier() == "" )
       queryString << "NULL" << ",";
     else
