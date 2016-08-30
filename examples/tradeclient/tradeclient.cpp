@@ -23,10 +23,10 @@
 #include "config.h"
 #endif
 
-#include "quickfix/FileStore.h"
+#include "quickfix/MySQLStore.h"
 #include "quickfix/SocketInitiator.h"
 #include "quickfix/SessionSettings.h"
-#include "quickfix/Log.h"
+#include "quickfix/MySQLLog.h"
 #include "Application.h"
 #include <string>
 #include <iostream>
@@ -49,8 +49,8 @@ int main( int argc, char** argv )
     FIX::SessionSettings settings( file );
 
     Application application( settings );
-    FIX::FileStoreFactory storeFactory( settings );
-    FIX::ScreenLogFactory logFactory( settings );
+    FIX::MySQLStoreFactory storeFactory( settings );
+    FIX::MySQLLogFactory logFactory( settings );
     FIX::SocketInitiator initiator( application, storeFactory, settings, logFactory );
 
     initiator.start();
