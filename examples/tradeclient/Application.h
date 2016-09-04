@@ -27,7 +27,13 @@
 #include "quickfix/Values.h"
 #include "quickfix/Mutex.h"
 
+#include "quickfix/fix44/TestRequest.h"
+
 #include <queue>
+#include <map>
+
+const char SessionTypeTrade [] = "Trade";
+const char SessionTypeRatefeed [] = "Ratefeed";
 
 class Application :
       public FIX::Application,
@@ -42,6 +48,8 @@ public:
 
 private:
   FIX::SessionSettings m_settings;
+  std::map<std::string, std::string> m_senderID;
+  std::map<std::string, std::string> m_targetID;
   void onCreate( const FIX::SessionID& ) {}
   void onLogon( const FIX::SessionID& sessionID );
   void onLogout( const FIX::SessionID& sessionID );
@@ -52,6 +60,9 @@ private:
     throw( FIX::FieldNotFound, FIX::IncorrectDataFormat, FIX::IncorrectTagValue, FIX::RejectLogon ) {}
   void fromApp( const FIX::Message& message, const FIX::SessionID& sessionID )
     throw( FIX::FieldNotFound, FIX::IncorrectDataFormat, FIX::IncorrectTagValue, FIX::UnsupportedMessageType );
+
+  void TestRequest(const char* sessionType );
+  void SetMessageHeader( FIX::Message& message, const char* sessionType );
 
 };
 

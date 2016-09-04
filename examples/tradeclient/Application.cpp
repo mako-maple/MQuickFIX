@@ -73,18 +73,50 @@ void Application::run()
   {
     try
     {
-      char action;
+      std::string action;
       std::cout << std::endl
         << "q) Quit" << std::endl
+        << "test1) testRequest Trade" << std::endl
+        << "test2) testRequest Ratefeed" << std::endl
         << "Action: ";
       std::cin >> action;
                 
-      if ( action == 'q' )
-        break;
+      if ( action == "q" ) break;
+      else if ( action == "test1" ) TestRequest( SessionTypeTrade );
+      else if ( action == "test2" ) TestRequest( SessionTypeRatefeed );
     }
     catch ( std::exception & e )
     {
       std::cout << "Message Not Sent: " << e.what();
     }
   }
+}
+
+void Application::TestRequest( const char* sessionType )
+{
+  FIX44::TestRequest message((FIX::TestReqID)sessionType);
+  SetMessageHeader( message, sessionType );
+  FIX::Session::sendToTarget( message );
+  std::cout << std::endl << "TestRequest: " << message << std::endl;
+}
+
+void Application::SetMessageHeader( FIX::Message& message, const char* sessionType )
+{
+  auto itr = m_senderID.find(sessionType);
+  if (itr == m_senderID.end())
+  {
+    const std::set <FIX::SessionID> session = m_settings.getSessions();
+    for (std::set <FIX::SessionID>::iterator it = session.begin(); it != session.end(); ++it)
+    {
+      const FIX::Dictionary dic = m_settings.get( *it );
+      if (dic.getString("SessionType") == sessionType)
+      {
+        m_senderID[dic.getString("SessionType")] = dic.getString("SenderCompID");
+        m_targetID[dic.getString("SessionType")] = dic.getString("TargetCompID");
+        break;
+      }
+    }
+  }
+  message.getHeader().setField((FIX::SenderCompID)m_senderID[sessionType]);
+  message.getHeader().setField((FIX::TargetCompID)m_targetID[sessionType]);
 }
