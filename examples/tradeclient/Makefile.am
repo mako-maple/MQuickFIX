@@ -3,7 +3,9 @@ noinst_PROGRAMS = tradeclient
 tradeclient_SOURCES = \
 	tradeclient.cpp \
 	Application.h \
-	Application.cpp
+	Application.cpp \
+	TestRequest.cpp \
+        TradingSessionStatus.cpp 
 
 tradeclient_LDADD = $(top_builddir)/src/C++/libquickfix.la 
 

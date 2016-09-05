@@ -92,14 +92,6 @@ void Application::run()
   }
 }
 
-void Application::TestRequest( const char* sessionType )
-{
-  FIX44::TestRequest message((FIX::TestReqID)sessionType);
-  SetMessageHeader( message, sessionType );
-  FIX::Session::sendToTarget( message );
-  std::cout << std::endl << "TestRequest: " << message << std::endl;
-}
-
 void Application::SetMessageHeader( FIX::Message& message, const char* sessionType )
 {
   auto itr = m_senderID.find(sessionType);

@@ -27,7 +27,9 @@
 #include "quickfix/Values.h"
 #include "quickfix/Mutex.h"
 
-#include "quickfix/fix44/TestRequest.h"
+#include "quickfix/fix44/TestRequest.h"                         // < 1 >
+#include "quickfix/fix44/TradingSessionStatus.h"                // < h >
+#include "quickfix/fix44/TradingSessionStatusRequest.h"         // < g >
 
 #include <queue>
 #include <map>
@@ -61,7 +63,9 @@ private:
   void fromApp( const FIX::Message& message, const FIX::SessionID& sessionID )
     throw( FIX::FieldNotFound, FIX::IncorrectDataFormat, FIX::IncorrectTagValue, FIX::UnsupportedMessageType );
 
-  void TestRequest(const char* sessionType );
+  /* h  */ void onMessage(const FIX44::TradingSessionStatus&, const FIX::SessionID& );
+  /* 1  */ void TestRequest(const char* sessionType );
+
   void SetMessageHeader( FIX::Message& message, const char* sessionType );
 
 };
