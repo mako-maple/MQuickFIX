@@ -112,3 +112,38 @@ void Application::SetMessageHeader( FIX::Message& message, const char* sessionTy
   message.getHeader().setField((FIX::SenderCompID)m_senderID[sessionType]);
   message.getHeader().setField((FIX::TargetCompID)m_targetID[sessionType]);
 }
+
+
+FIX::MySQLConnection *Application::MySQLConnect()
+{
+  if (m_database == "")
+  {
+    m_database = DEFAULT_DATABASE;
+    m_user = DEFAULT_USER;
+    m_pass = DEFAULT_PASS;
+    m_host = DEFAULT_HOST;
+    m_port = DEFAULT_PORT;
+
+    const FIX::Dictionary dic = m_settings.get();
+    if (dic.has("MySQLStoreDatabase")) m_database = dic.getString("MySQLStoreDatabase");
+    if (dic.has("MySQLStoreUser")) m_user = dic.getString("MySQLStoreUser");
+    if (dic.has("MySQLStorePassword")) m_pass = dic.getString("MySQLStorePassword");
+    if (dic.has("MySQLStoreHost")) m_host = dic.getString("MySQLStoreHost");
+    if (dic.has("MySQLStorePort")) m_port = dic.getInt("MySQLStorePort");
+  }
+
+  return new FIX::MySQLConnection( m_database, m_user, m_pass, m_host, m_port );
+}
+
+std::string Application::YmdHMSs()
+{
+  FIX::UtcTimeStamp time;
+ int year, month, day, hour, minute, second, millis;
+ time.getYMD( year, month, day );
+ time.getHMS( hour, minute, second, millis );
+ char tm[ 20 ];
+ // YYYYmmdd-HHMMSS.sss
+ // 1234567890123456789
+ STRING_SPRINTF( tm, "%04d%02d%02d-%02d%02d%02d.%03d", year, month, day, hour, minute, second, millis );
+ return tm;
+}
