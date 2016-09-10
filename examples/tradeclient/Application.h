@@ -38,11 +38,11 @@
 
 const char SessionTypeTrade [] = "Trade";
 const char SessionTypeRatefeed [] = "Ratefeed";
-const char DEFAULT_DATABASE[] = "quickfix";
-const char DEFAULT_USER[] = "root";
-const char DEFAULT_PASS[] = "";
-const char DEFAULT_HOST[] = "localhost";
-const short DEFAULT_PORT = 3306;
+const char AppDEFAULT_DATABASE[] = "quickfix";
+const char AppDEFAULT_USER[] = "root";
+const char AppDEFAULT_PASS[] = "";
+const char AppDEFAULT_HOST[] = "localhost";
+const short AppDEFAULT_PORT = 3306;
 
 class Application :
       public FIX::Application,
@@ -58,7 +58,9 @@ public:
   }
 
   ~Application()
-  { if (m_sql) delete m_sql; }
+  { 
+    if (m_sql) delete m_sql; 
+  }
 
   void run();
 

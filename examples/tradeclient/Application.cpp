@@ -50,6 +50,9 @@ void Application::toAdmin( FIX::Message& message, const FIX::SessionID& sessionI
     if (dic.has("Password"))
       message.getHeader().setField(FIX::Password(dic.getString("Password")));
   }
+  
+  if (FIX::MsgType_TestRequest == message.getHeader().getField(FIX::FIELD::MsgType))
+    InsertTestRequest( message );
 }
 
 void Application::toApp( FIX::Message& message, const FIX::SessionID& sessionID )
@@ -118,11 +121,11 @@ FIX::MySQLConnection *Application::MySQLConnect()
 {
   if (m_database == "")
   {
-    m_database = DEFAULT_DATABASE;
-    m_user = DEFAULT_USER;
-    m_pass = DEFAULT_PASS;
-    m_host = DEFAULT_HOST;
-    m_port = DEFAULT_PORT;
+    m_database = AppDEFAULT_DATABASE;
+    m_user = AppDEFAULT_USER;
+    m_pass = AppDEFAULT_PASS;
+    m_host = AppDEFAULT_HOST;
+    m_port = AppDEFAULT_PORT;
 
     const FIX::Dictionary dic = m_settings.get();
     if (dic.has("MySQLStoreDatabase")) m_database = dic.getString("MySQLStoreDatabase");
