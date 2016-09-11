@@ -28,9 +28,33 @@
 #include "quickfix/Mutex.h"
 #include "quickfix/MySQLConnection.h"
 
-#include "quickfix/fix44/TestRequest.h"                         // < 1 >
-#include "quickfix/fix44/TradingSessionStatus.h"                // < h >
-#include "quickfix/fix44/TradingSessionStatusRequest.h"         // < g >
+#include "quickfix/fix44/TestRequest.h"                     // < 1 >
+#include "quickfix/fix44/OrderMassCancelRequest.h"          // < q >
+#include "quickfix/fix44/SecurityListRequest.h"             // < x >
+#include "quickfix/fix44/NewOrderSingle.h"                  // < D >
+#include "quickfix/fix44/OrderCancelRequest.h"              // < F >
+#include "quickfix/fix44/OrderCancelReplaceRequest.h"       // < G >
+#include "quickfix/fix44/OrderStatusRequest.h"              // < H >
+#include "quickfix/fix44/MarketDataRequest.h"               // < V >
+#include "quickfix/fix44/OrderMassStatusRequest.h"          // < AF >
+#include "quickfix/fix44/RequestForPositions.h"             // < AN >
+
+#include "quickfix/fix44/ExecutionReport.h"                 // < 8 >
+#include "quickfix/fix44/OrderCancelReject.h"               // < 9 >
+#include "quickfix/fix44/TradingSessionStatus.h"            // < h >
+#include "quickfix/fix44/BusinessMessageReject.h"           // < j >
+#include "quickfix/fix44/OrderMassCancelReport.h"           // < r >
+#include "quickfix/fix44/SecurityList.h"                    // < y >
+#include "quickfix/fix44/Email.h"                           // < C >
+#include "quickfix/fix44/ListStatus.h"                      // < N >
+#include "quickfix/fix44/MarketDataIncrementalRefresh.h"    // < X >
+#include "quickfix/fix44/MarketDataRequestReject.h"         // < Y >
+#include "quickfix/fix44/RequestForPositionsAck.h"          // < AO >
+#include "quickfix/fix44/PositionReport.h"                  // < AP >
+#include "quickfix/fix44/CollateralResponse.h"              // < AZ >
+#include "quickfix/fix44/CollateralReport.h"                // < BA >
+                                                            // CG
+                                                            // PU
 
 #include <queue>
 #include <map>
@@ -86,9 +110,34 @@ private:
   void fromApp( const FIX::Message& message, const FIX::SessionID& sessionID )
     throw( FIX::FieldNotFound, FIX::IncorrectDataFormat, FIX::IncorrectTagValue, FIX::UnsupportedMessageType );
 
-  /* h  */ void onMessage( const FIX44::TradingSessionStatus&, const FIX::SessionID& );
+  /* 8  */ void onMessage( const FIX44::ExecutionReport&,              const FIX::SessionID& );
+  /* 9  */ void onMessage( const FIX44::OrderCancelReject&,            const FIX::SessionID& );
+  /* h  */ void onMessage( const FIX44::TradingSessionStatus&,         const FIX::SessionID& );
+  /* j  */ void onMessage( const FIX44::BusinessMessageReject&,        const FIX::SessionID& );
+  /* r  */ void onMessage( const FIX44::OrderMassCancelReport&,        const FIX::SessionID& );
+  /* y  */ void onMessage( const FIX44::SecurityList&,                 const FIX::SessionID& );
+  /* C  */ void onMessage( const FIX44::Email&,                        const FIX::SessionID& );
+  /* N  */ void onMessage( const FIX44::ListStatus&,                   const FIX::SessionID& );
+  /* X  */ void onMessage( const FIX44::MarketDataIncrementalRefresh&, const FIX::SessionID& );
+  /* Y  */ void onMessage( const FIX44::MarketDataRequestReject&,      const FIX::SessionID& );
+  /* AO */ void onMessage( const FIX44::RequestForPositionsAck&,       const FIX::SessionID& );
+  /* AP */ void onMessage( const FIX44::PositionReport&,               const FIX::SessionID& );
+  /* AZ */ void onMessage( const FIX44::CollateralResponse&,           const FIX::SessionID& );
+  /* BA */ void onMessage( const FIX44::CollateralReport&,             const FIX::SessionID& );
+  // CG
+  // PU
+
   /* 1  */ void TestRequest( const char* );
-  /* 1  */ void InsertTestRequest( FIX::Message& );
+           void InsertTestRequest( FIX::Message& );
+  /* q  */ void OrderMassCancelRequest( const char* = SessionTypeTrade );
+  /* x  */ void SecurityListRequest( const char* = SessionTypeTrade );
+  /* D  */ void NewOrderSingle( const char* = SessionTypeTrade );
+  /* F  */ void OrderCancelRequest( const char* = SessionTypeTrade );
+  /* G  */ void OrderCancelReplaceRequest( const char* = SessionTypeTrade );
+  /* H  */ void OrderStatusRequest( const char* = SessionTypeTrade );
+  /* V  */ void MarketDataRequest( const char* = SessionTypeRatefeed );
+  /* AF */ void OrderMassStatusRequest( const char* = SessionTypeTrade );
+  /* AN */ void RequestForPositions( const char* = SessionTypeTrade );
 
   void SetMessageHeader( FIX::Message&, const char* );
   FIX::MySQLConnection *MySQLConnect();

@@ -4,8 +4,8 @@
 #include "quickfix/Session.h"
 #include <iostream>
 
-/* h  */
-void Application::onMessage(const FIX44::TradingSessionStatus& message, const FIX::SessionID& sessionID )
+/* y  */
+void Application::onMessage(const FIX44::SecurityList& message, const FIX::SessionID& sessionID )
 {
   std::cout << message.toXML() << std::endl;
 }
