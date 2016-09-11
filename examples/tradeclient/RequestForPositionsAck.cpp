@@ -7,5 +7,5 @@
 /* AO */
 void Application::onMessage(const FIX44::RequestForPositionsAck& message, const FIX::SessionID& sessionID )
 {
-  std::cout << message.toXML() << std::endl;
+  std::cout << std::endl << "<AO> RequestForPositionsAck:" << message.toXML() << std::endl;
 }

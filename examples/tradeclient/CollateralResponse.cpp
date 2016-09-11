@@ -7,5 +7,5 @@
 /* AZ  */
 void Application::onMessage(const FIX44::CollateralResponse& message, const FIX::SessionID& sessionID )
 {
-  std::cout << message.toXML() << std::endl;
+  std::cout << std::endl << "<AZ> CollateralResponse:" << message.toXML() << std::endl;
 }

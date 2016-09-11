@@ -7,5 +7,5 @@
 /* AP */
 void Application::onMessage(const FIX44::PositionReport& message, const FIX::SessionID& sessionID )
 {
-  std::cout << message.toXML() << std::endl;
+  std::cout << std::endl << "<AP> PositionReport:" << message.toXML() << std::endl;
 }

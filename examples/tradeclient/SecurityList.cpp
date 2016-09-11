@@ -7,5 +7,5 @@
 /* y  */
 void Application::onMessage(const FIX44::SecurityList& message, const FIX::SessionID& sessionID )
 {
-  std::cout << message.toXML() << std::endl;
+  std::cout << std::endl << "<y> SecurityList:" << message.toXML() << std::endl;
 }

@@ -7,5 +7,5 @@
 /* BA  */
 void Application::onMessage(const FIX44::CollateralReport& message, const FIX::SessionID& sessionID )
 {
-  std::cout << message.toXML() << std::endl;
+  std::cout << "<BA> CollateralReport: " << std::endl << message.toXML() << std::endl;
 }

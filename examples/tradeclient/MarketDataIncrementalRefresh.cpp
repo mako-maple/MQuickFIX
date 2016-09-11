@@ -7,5 +7,5 @@
 /* X  */
 void Application::onMessage(const FIX44::MarketDataIncrementalRefresh& message, const FIX::SessionID& sessionID )
 {
-  std::cout << message.toXML() << std::endl;
+  std::cout << std::endl << "<X> MarketDataIncrementalRefresh:" << message.toXML() << std::endl;
 }

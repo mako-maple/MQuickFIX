@@ -27,7 +27,11 @@ tradeclient_SOURCES = \
 	RequestForPositionsAck.cpp       \
 	PositionReport.cpp               \
 	CollateralResponse.cpp           \
-	CollateralReport.cpp             
+	CollateralReport.cpp             \
+	OrderRateUpdate.h            \
+	OrderRateUpdate.cpp          \
+	PartyDetailsListReport.h     \
+	PartyDetailsListReport.cpp   
 
 tradeclient_LDADD = $(top_builddir)/src/C++/libquickfix.la 
 

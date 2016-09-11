@@ -138,6 +138,14 @@ FIX::MySQLConnection *Application::MySQLConnect()
   return new FIX::MySQLConnection( m_database, m_user, m_pass, m_host, m_port );
 }
 
+std::string Application::getSetting( const char* key )
+{
+  std::string ret = "";
+  const FIX::Dictionary dic = m_settings.get();
+  if (dic.has(key)) ret = dic.getString(key);
+  return key;
+}
+
 std::string Application::YmdHMSs()
 {
   FIX::UtcTimeStamp time;

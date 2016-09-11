@@ -7,5 +7,5 @@
 /* 9  */
 void Application::onMessage(const FIX44::OrderCancelReject& message, const FIX::SessionID& sessionID )
 {
-  std::cout << message.toXML() << std::endl;
+  std::cout << std::endl << "<9> OrderCancelReject:" << message.toXML() << std::endl;
 }

@@ -7,5 +7,5 @@
 /* h  */
 void Application::onMessage(const FIX44::TradingSessionStatus& message, const FIX::SessionID& sessionID )
 {
-  std::cout << message.toXML() << std::endl;
+  std::cout << std::endl << "<h> TradingSessionStatus:" << message.toXML() << std::endl;
 }

@@ -53,8 +53,9 @@
 #include "quickfix/fix44/PositionReport.h"                  // < AP >
 #include "quickfix/fix44/CollateralResponse.h"              // < AZ >
 #include "quickfix/fix44/CollateralReport.h"                // < BA >
-                                                            // CG
-                                                            // PU
+
+#include "PartyDetailsListReport.h"                         // < CG >
+#include "OrderRateUpdate.h"                                // < PU >
 
 #include <queue>
 #include <map>
@@ -79,6 +80,8 @@ public:
   {
     openlog("mQuickFIX", LOG_CONS | LOG_PID | LOG_NDELAY, LOG_USER);
     m_sql = MySQLConnect();
+    m_accountID = getSetting("AccountID");
+    m_partyID = getSetting("PartyID");
   }
 
   ~Application()
@@ -98,6 +101,8 @@ private:
   short m_port;
   std::map<std::string, std::string> m_senderID;
   std::map<std::string, std::string> m_targetID;
+  std::string m_accountID;
+  std::string m_partyID;
 
   void onCreate( const FIX::SessionID& ) {}
   void onLogon( const FIX::SessionID& sessionID );
@@ -124,8 +129,9 @@ private:
   /* AP */ void onMessage( const FIX44::PositionReport&,               const FIX::SessionID& );
   /* AZ */ void onMessage( const FIX44::CollateralResponse&,           const FIX::SessionID& );
   /* BA */ void onMessage( const FIX44::CollateralReport&,             const FIX::SessionID& );
-  // CG
-  // PU
+
+  /* CG */ void onMessage( const FIX44::PartyDetailsListReport&,       const FIX::SessionID& );
+  /* PU */ void onMessage( const FIX44::OrderRateUpdate&,              const FIX::SessionID& );
 
   /* 1  */ void TestRequest( const char* );
            void InsertTestRequest( FIX::Message& );
@@ -141,6 +147,7 @@ private:
 
   void SetMessageHeader( FIX::Message&, const char* );
   FIX::MySQLConnection *MySQLConnect();
+  std::string getSetting( const char* );
   std::string YmdHMSs();
 };
 

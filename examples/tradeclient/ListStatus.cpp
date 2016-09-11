@@ -7,5 +7,5 @@
 /* N  */
 void Application::onMessage(const FIX44::ListStatus& message, const FIX::SessionID& sessionID )
 {
-  std::cout << message.toXML() << std::endl;
+  std::cout << std::endl << "<N> ListStatus:" << message.toXML() << std::endl;
 }

@@ -7,5 +7,5 @@
 /* r  */
 void Application::onMessage(const FIX44::OrderMassCancelReport& message, const FIX::SessionID& sessionID )
 {
-  std::cout << message.toXML() << std::endl;
+  std::cout << std::endl << "<r> OrderMassCancelReport:" << message.toXML() << std::endl;
 }
