@@ -20,6 +20,7 @@ tradeclient_SOURCES = \
 	BusinessMessageReject.cpp        \
 	OrderMassCancelReport.cpp        \
 	SecurityList.cpp                 \
+	SecurityList.h                   \
 	Email.cpp                        \
 	ListStatus.cpp                   \
 	MarketDataIncrementalRefresh.cpp \

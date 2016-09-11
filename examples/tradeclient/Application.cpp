@@ -81,12 +81,14 @@ void Application::run()
         << "q) Quit" << std::endl
         << "test1) testRequest Trade" << std::endl
         << "test2) testRequest Ratefeed" << std::endl
+        << "symbol) Security List Request" << std::endl
         << "Action: ";
       std::cin >> action;
                 
       if ( action == "q" ) break;
       else if ( action == "test1" ) TestRequest( SessionTypeTrade );
       else if ( action == "test2" ) TestRequest( SessionTypeRatefeed );
+      else if ( action == "symbol" ) SecurityListRequest();
     }
     catch ( std::exception & e )
     {

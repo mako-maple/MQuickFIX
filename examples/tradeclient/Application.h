@@ -137,6 +137,7 @@ private:
            void InsertTestRequest( FIX::Message& );
   /* q  */ void OrderMassCancelRequest( const char* = SessionTypeTrade );
   /* x  */ void SecurityListRequest( const char* = SessionTypeTrade );
+           void InsertSecurityListRequest( const FIX::Message& );
   /* D  */ void NewOrderSingle( const char* = SessionTypeTrade );
   /* F  */ void OrderCancelRequest( const char* = SessionTypeTrade );
   /* G  */ void OrderCancelReplaceRequest( const char* = SessionTypeTrade );
