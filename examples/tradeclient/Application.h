@@ -124,6 +124,7 @@ private:
   /* C  */ void onMessage( const FIX44::Email&,                        const FIX::SessionID& );
   /* N  */ void onMessage( const FIX44::ListStatus&,                   const FIX::SessionID& );
   /* X  */ void onMessage( const FIX44::MarketDataIncrementalRefresh&, const FIX::SessionID& );
+           void InsertMarketData( const FIX::Message& );
   /* Y  */ void onMessage( const FIX44::MarketDataRequestReject&,      const FIX::SessionID& );
   /* AO */ void onMessage( const FIX44::RequestForPositionsAck&,       const FIX::SessionID& );
   /* AP */ void onMessage( const FIX44::PositionReport&,               const FIX::SessionID& );
@@ -142,7 +143,8 @@ private:
   /* F  */ void OrderCancelRequest( const char* = SessionTypeTrade );
   /* G  */ void OrderCancelReplaceRequest( const char* = SessionTypeTrade );
   /* H  */ void OrderStatusRequest( const char* = SessionTypeTrade );
-  /* V  */ void MarketDataRequest( const char*, const std::string&, int, const bool&, const FIX::SubscriptionRequestType& );
+  /* V  */ void MarketDataRequest( const std::string&, int, const bool&, const FIX::SubscriptionRequestType& );
+           void InsertMarketDataRequest( const FIX::Message& );
   /* AF */ void OrderMassStatusRequest( const char* = SessionTypeTrade );
   /* AN */ void RequestForPositions( const char* = SessionTypeTrade );
 
