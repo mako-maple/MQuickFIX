@@ -82,6 +82,13 @@ void Application::run()
         << "test1) testRequest Trade" << std::endl
         << "test2) testRequest Ratefeed" << std::endl
         << "symbol) Security List Request" << std::endl
+        <<  std::endl
+        << "Vj) MarketDataRequest USD/JPY TOP Aggr" << std::endl
+        << "Ve) MarketDataRequest EUR/USD TOP Aggr" << std::endl
+        <<  std::endl
+        << "Vjq) MarketDataRequest USD/JPY STOP" << std::endl
+        << "Veq) MarketDataRequest EUR/USD STOP" << std::endl
+        <<  std::endl
         << "Action: ";
       std::cin >> action;
                 
@@ -89,6 +96,12 @@ void Application::run()
       else if ( action == "test1" ) TestRequest( SessionTypeTrade );
       else if ( action == "test2" ) TestRequest( SessionTypeRatefeed );
       else if ( action == "symbol" ) SecurityListRequest();
+
+      else if ( action == "Vj" ) MarketDataRequest( SessionTypeRatefeed, "USD/JPY", 1, true,  FIX::SubscriptionRequestType_SNAPSHOT_PLUS_UPDATES );
+      else if ( action == "Ve" ) MarketDataRequest( SessionTypeRatefeed, "EUR/USD", 1, true,  FIX::SubscriptionRequestType_SNAPSHOT_PLUS_UPDATES );
+
+      else if ( action == "Vjq" ) MarketDataRequest( SessionTypeRatefeed, "USD/JPY", 0, false,  FIX::SubscriptionRequestType_DISABLE_PREVIOUS_SNAPSHOT_PLUS_UPDATE_REQUEST  );
+      else if ( action == "Veq" ) MarketDataRequest( SessionTypeRatefeed, "EUR/USD", 0, false,  FIX::SubscriptionRequestType_DISABLE_PREVIOUS_SNAPSHOT_PLUS_UPDATE_REQUEST  );
     }
     catch ( std::exception & e )
     {

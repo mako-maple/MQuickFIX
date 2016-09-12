@@ -142,7 +142,7 @@ private:
   /* F  */ void OrderCancelRequest( const char* = SessionTypeTrade );
   /* G  */ void OrderCancelReplaceRequest( const char* = SessionTypeTrade );
   /* H  */ void OrderStatusRequest( const char* = SessionTypeTrade );
-  /* V  */ void MarketDataRequest( const char* = SessionTypeRatefeed );
+  /* V  */ void MarketDataRequest( const char*, const std::string&, int, const bool&, const FIX::SubscriptionRequestType& );
   /* AF */ void OrderMassStatusRequest( const char* = SessionTypeTrade );
   /* AN */ void RequestForPositions( const char* = SessionTypeTrade );
 
