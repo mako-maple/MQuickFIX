@@ -5,9 +5,10 @@
 #include <iostream>
 
 /* D  */
-void Application::NewOrderSingle( const char* sessionType )
+void Application::NewOrderSingle()
 {
   FIX44::NewOrderSingle message;
-  SetMessageHeader( message, sessionType );
+  SetMessageHeader( message );
   FIX::Session::sendToTarget( message );
+  std::cout << "<D> NewOrderSingle: " << std::endl << message.toXML() << std::endl;
 }

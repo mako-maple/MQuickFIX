@@ -43,9 +43,10 @@ void Application::MarketDataRequest(
   message.addGroup( symbolGroup );
 
   SetMessageHeader( message, SessionTypeRatefeed );
+  InsertMarketDataRequest( message );
   FIX::Session::sendToTarget( message );
 
-  InsertMarketDataRequest( message );
+  std::cout << "<V> MarketDataRequest: " << std::endl << message.toXML() << std::endl;
 }
 
 void Application::InsertMarketDataRequest( const FIX::Message& message )

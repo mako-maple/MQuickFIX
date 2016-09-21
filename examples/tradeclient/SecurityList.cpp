@@ -99,6 +99,5 @@ void Application::onMessage(const FIX44::SecurityList& message, const FIX::Sessi
     "  `DecPlaces_Forex` = VALUES(`DecPlaces_Forex`), " <<
     "  `ReqID`           = VALUES(`ReqID`)            ";
   FIX::MySQLQuery q2( s2.str() );
-  std::cout << "SQL:" << s2.str() << std::endl;
   m_sql->execute( q2 );
 }

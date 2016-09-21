@@ -5,15 +5,16 @@
 #include <iostream>
 
 /* x  */
-void Application::SecurityListRequest( const char* sessionType )
+void Application::SecurityListRequest()
 {
   FIX44::SecurityListRequest message(
   /* 320  */ FIX::SecurityReqID( "SecListReq_" + YmdHMSs() ),
   /* 559  */ FIX::SecurityListRequestType( FIX::SecurityListRequestType_SYMBOL /* 0 */ )
   );
   InsertSecurityListRequest( message );
-  SetMessageHeader( message, sessionType );
+  SetMessageHeader( message );
   FIX::Session::sendToTarget( message );
+  std::cout << "<x> SecurityListRequest: " << std::endl << message.toXML() << std::endl;
 }
 
 void Application::InsertSecurityListRequest( const FIX::Message & message )

@@ -115,6 +115,7 @@ private:
   void fromApp( const FIX::Message& message, const FIX::SessionID& sessionID )
     throw( FIX::FieldNotFound, FIX::IncorrectDataFormat, FIX::IncorrectTagValue, FIX::UnsupportedMessageType );
 
+
   /* 8  */ void onMessage( const FIX44::ExecutionReport&,              const FIX::SessionID& );
   /* 9  */ void onMessage( const FIX44::OrderCancelReject&,            const FIX::SessionID& );
   /* h  */ void onMessage( const FIX44::TradingSessionStatus&,         const FIX::SessionID& );
@@ -134,21 +135,22 @@ private:
   /* CG */ void onMessage( const FIX44::PartyDetailsListReport&,       const FIX::SessionID& );
   /* PU */ void onMessage( const FIX44::OrderRateUpdate&,              const FIX::SessionID& );
 
+
   /* 1  */ void TestRequest( const char* );
            void InsertTestRequest( FIX::Message& );
-  /* q  */ void OrderMassCancelRequest( const char* = SessionTypeTrade );
-  /* x  */ void SecurityListRequest( const char* = SessionTypeTrade );
+  /* q  */ void OrderMassCancelRequest();
+  /* x  */ void SecurityListRequest();
            void InsertSecurityListRequest( const FIX::Message& );
-  /* D  */ void NewOrderSingle( const char* = SessionTypeTrade );
-  /* F  */ void OrderCancelRequest( const char* = SessionTypeTrade );
-  /* G  */ void OrderCancelReplaceRequest( const char* = SessionTypeTrade );
-  /* H  */ void OrderStatusRequest( const char* = SessionTypeTrade );
+  /* D  */ void NewOrderSingle();
+  /* F  */ void OrderCancelRequest();
+  /* G  */ void OrderCancelReplaceRequest();
+  /* H  */ void OrderStatusRequest();
   /* V  */ void MarketDataRequest( const std::string&, int, const bool&, const FIX::SubscriptionRequestType& );
            void InsertMarketDataRequest( const FIX::Message& );
-  /* AF */ void OrderMassStatusRequest( const char* = SessionTypeTrade );
-  /* AN */ void RequestForPositions( const char* = SessionTypeTrade );
+  /* AF */ void OrderMassStatusRequest();
+  /* AN */ void RequestForPositions( const std::string& clearingBusinessDate = "" );
 
-  void SetMessageHeader( FIX::Message&, const char* );
+  void SetMessageHeader( FIX::Message&, const char* = SessionTypeTrade );
   FIX::MySQLConnection *MySQLConnect();
   std::string getSetting( const char* );
   std::string YmdHMSs();

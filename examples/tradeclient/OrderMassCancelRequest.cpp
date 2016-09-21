@@ -5,9 +5,10 @@
 #include <iostream>
 
 /* q  */
-void Application::OrderMassCancelRequest( const char* sessionType )
+void Application::OrderMassCancelRequest()
 {
   FIX44::OrderMassCancelRequest message;
-  SetMessageHeader( message, sessionType );
+  SetMessageHeader( message );
   FIX::Session::sendToTarget( message );
+  std::cout << "<q> OrderMassCancelRequest: " << std::endl << message.toXML() << std::endl;
 }

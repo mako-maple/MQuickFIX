@@ -5,9 +5,10 @@
 #include <iostream>
 
 /* H  */
-void Application::OrderStatusRequest( const char* sessionType )
+void Application::OrderStatusRequest()
 {
   FIX44::OrderStatusRequest message;
-  SetMessageHeader( message, sessionType );
+  SetMessageHeader( message );
   FIX::Session::sendToTarget( message );
+  std::cout << "<H> OrderStatusRequest: " << std::endl << message.toXML() << std::endl;
 }

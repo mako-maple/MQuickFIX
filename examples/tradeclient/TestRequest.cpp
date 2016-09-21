@@ -12,6 +12,7 @@ void Application::TestRequest( const char* sessionType )
   );
   SetMessageHeader( message, sessionType );
   FIX::Session::sendToTarget( message );
+  std::cout << "<1> TestRequest: " << std::endl << message.toXML() << std::endl;
 }
 
 /* 1  */ 

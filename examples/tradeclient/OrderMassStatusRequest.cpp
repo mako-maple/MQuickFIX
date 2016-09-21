@@ -5,9 +5,10 @@
 #include <iostream>
 
 /* AF */
-void Application::OrderMassStatusRequest( const char* sessionType )
+void Application::OrderMassStatusRequest()
 {
   FIX44::OrderMassStatusRequest message;
-  SetMessageHeader( message, sessionType );
+  SetMessageHeader( message );
   FIX::Session::sendToTarget( message );
+  std::cout << "<AF> OrderMassStatusRequest: " << std::endl << message.toXML() << std::endl;
 }

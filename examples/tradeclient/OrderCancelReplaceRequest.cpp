@@ -5,9 +5,10 @@
 #include <iostream>
 
 /* G  */
-void Application::OrderCancelReplaceRequest( const char* sessionType )
+void Application::OrderCancelReplaceRequest()
 {
   FIX44::OrderCancelReplaceRequest message;
-  SetMessageHeader( message, sessionType );
+  SetMessageHeader( message );
   FIX::Session::sendToTarget( message );
+  std::cout << "<G> OrderCancelReplaceRequest: " << std::endl << message.toXML() << std::endl;
 }
