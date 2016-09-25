@@ -32,7 +32,8 @@ tradeclient_SOURCES = \
 	OrderRateUpdate.h            \
 	OrderRateUpdate.cpp          \
 	PartyDetailsListReport.h     \
-	PartyDetailsListReport.cpp   
+	PartyDetailsListReport.cpp   \
+	Rate.h            
 
 tradeclient_LDADD = $(top_builddir)/src/C++/libquickfix.la 
 

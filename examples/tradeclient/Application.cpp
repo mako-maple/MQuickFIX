@@ -72,6 +72,9 @@ void Application::run()
         << "Vjq) MarketDataRequest USD/JPY STOP" << std::endl
         << "Veq) MarketDataRequest EUR/USD STOP" << std::endl
         <<  std::endl
+        << "rate) MarketData Rate List" << std::endl
+        << "rJ) MarketData USD/JPY" << std::endl
+        <<  std::endl
         << "Action: ";
       std::cin >> action;
                 
@@ -80,11 +83,30 @@ void Application::run()
       else if ( action == "test2" ) TestRequest( SessionTypeRatefeed );
       else if ( action == "symbol" ) SecurityListRequest();
 
-      else if ( action == "Vj" ) MarketDataRequest( "USD/JPY", 1, true,  FIX::SubscriptionRequestType_SNAPSHOT_PLUS_UPDATES );
-      else if ( action == "Ve" ) MarketDataRequest( "EUR/USD", 1, true,  FIX::SubscriptionRequestType_SNAPSHOT_PLUS_UPDATES );
+      else if ( action == "Vj" ) MarketDataRequest( "USD/JPY", 1, true,  true );
+      else if ( action == "Ve" ) MarketDataRequest( "EUR/USD", 1, true,  true );
 
-      else if ( action == "Vjq" ) MarketDataRequest( "USD/JPY", 0, false,  FIX::SubscriptionRequestType_DISABLE_PREVIOUS_SNAPSHOT_PLUS_UPDATE_REQUEST  );
-      else if ( action == "Veq" ) MarketDataRequest( "EUR/USD", 0, false,  FIX::SubscriptionRequestType_DISABLE_PREVIOUS_SNAPSHOT_PLUS_UPDATE_REQUEST  );
+      else if ( action == "Vjq" ) MarketDataRequest( "USD/JPY", 0, false,  false );
+      else if ( action == "Veq" ) MarketDataRequest( "EUR/USD", 0, false,  false );
+
+      else if ( action == "rate" ) 
+        for (auto symbol : m_symbol)
+          std::cout << symbol.first << " " 
+            << rate[symbol.second].Time << " "
+            << rate[symbol.second].Symbol << " "
+            << rate[symbol.second].Bid << "\t"
+            << rate[symbol.second].Spred << "\t"
+            << rate[symbol.second].Ask << "\t"
+            << std::endl;
+
+      else if ( action == "rJ" ) 
+          std::cout << "USD/JPY" << " " 
+            << rate[m_symbol["USD/JPY"]].Time << " "
+            << rate[m_symbol["USD/JPY"]].Symbol << " "
+            << rate[m_symbol["USD/JPY"]].Bid << "\t"
+            << rate[m_symbol["USD/JPY"]].Spred << "\t"
+            << rate[m_symbol["USD/JPY"]].Ask << "\t"
+            << std::endl;
     }
     catch ( std::exception & e )
     {

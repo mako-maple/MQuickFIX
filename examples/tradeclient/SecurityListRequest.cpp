@@ -14,7 +14,7 @@ void Application::SecurityListRequest()
   InsertSecurityListRequest( message );
   SetMessageHeader( message );
   FIX::Session::sendToTarget( message );
-  std::cout << "<x> SecurityListRequest: " << std::endl << message.toXML() << std::endl;
+//  std::cout << "<x> SecurityListRequest: " << std::endl << message.toXML() << std::endl;
 }
 
 void Application::InsertSecurityListRequest( const FIX::Message & message )

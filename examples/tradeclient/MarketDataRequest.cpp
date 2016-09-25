@@ -9,16 +9,20 @@ void Application::MarketDataRequest(
     const std::string& target
   , const int depth
   , const bool& aggregate
-  , const FIX::SubscriptionRequestType& a_subType
+  , const bool& subType
 )
 {
   FIX44::MarketDataRequest message;
 
   /* 262  */ message.set(FIX::MDReqID( target ));
-  /* 263  */ message.set(FIX::SubscriptionRequestType( a_subType ));
   /* 264  */ message.set(FIX::MarketDepth( depth )); /* 1=TopBook, 0=FullBook */
   /* 265  */ message.set(FIX::MDUpdateType( FIX::MDUpdateType_INCREMENTAL_REFRESH )); /* 1 Only */
   /* 266  */ message.set(FIX::AggregatedBook( aggregate )); /* true = Aggregate, false = NoAggregate */
+
+  if ( subType )
+    /* 263  */ message.set(FIX::SubscriptionRequestType( FIX::SubscriptionRequestType_SNAPSHOT_PLUS_UPDATES ));
+  else
+    /* 263  */ message.set(FIX::SubscriptionRequestType( FIX::SubscriptionRequestType_DISABLE_PREVIOUS_SNAPSHOT_PLUS_UPDATE_REQUEST ));
 
   std::vector<char>c;
   c.push_back(FIX::MDEntryType_BID);                           /* 0 */
@@ -46,7 +50,7 @@ void Application::MarketDataRequest(
   InsertMarketDataRequest( message );
   FIX::Session::sendToTarget( message );
 
-  std::cout << "<V> MarketDataRequest: " << std::endl << message.toXML() << std::endl;
+//  std::cout << "<V> MarketDataRequest: " << std::endl << message.toXML() << std::endl;
 }
 
 void Application::InsertMarketDataRequest( const FIX::Message& message )

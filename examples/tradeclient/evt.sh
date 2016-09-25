@@ -1,5 +1,5 @@
 #!/bin/bash
-mysql -u quickfix -pquickfix quickfix << EOT  |  tail -20
+mysql -u quickfix_user -pquickfix_pass quickfix << EOT  |  tail -20
 
 set @@session.sql_mode='PIPES_AS_CONCAT';
 

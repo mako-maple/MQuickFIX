@@ -8,7 +8,7 @@
 /* y  */
 void Application::onMessage(const FIX44::SecurityList& message, const FIX::SessionID& sessionID )
 {
-  std::cout << std::endl << "<y> SecurityList:" << message.toXML() << std::endl;
+//  std::cout << std::endl << "<y> SecurityList:" << message.toXML() << std::endl;
 
   /* INIT Message Data */
   /* 52   */ FIX::FieldBase respDateTime( FIX::FIELD::SendingTime, "" );
@@ -16,6 +16,7 @@ void Application::onMessage(const FIX44::SecurityList& message, const FIX::Sessi
   /* 322  */ FIX::FieldBase respID( FIX::FIELD::SecurityResponseID, "0" );
   /* 560  */ FIX::FieldBase result( FIX::FIELD::SecurityRequestResult, "0" );
   /* 146  */ FIX::FieldBase symbolCount( FIX::FIELD::NoRelatedSym, "0" );
+  /* 55   */ FIX::FieldBase symbol(FIX::FIELD::Symbol, "NA");
 
   /* Get Message Data */
   /* 52   */ message.getHeader().getFieldIfSet( respDateTime );
@@ -58,13 +59,17 @@ void Application::onMessage(const FIX44::SecurityList& message, const FIX::Sessi
     "  `ReqID` " <<
     ") VALUES ";
 
+  /* init rate vector */
+  rate.clear();
+  rate.shrink_to_fit();
+  rate.resize(std::stoi(symbolCount.getString()));
+
   /* Loop: Currency Pair */
   for( int i=1; i <= std::stoi(symbolCount.getString()); i++ )
   {
-
     /* 146  */ FIX44::SecurityList::NoRelatedSym r;
                message.getGroup(i, r);
-    /* 55   */ FIX::FieldBase symbol(FIX::FIELD::Symbol, "NA");
+    /* 55   */ // FIX::FieldBase symbol(FIX::FIELD::Symbol, "NA");
     /* 870  */ FIX::FieldBase attrCount(FIX::FIELD::NoInstrAttrib, "0");
     /* 872  */ FIX::FieldBase value_str(FIX::FIELD::InstrAttribValue, "0");
     /* 872  */ FIX::FieldBase value_forex(FIX::FIELD::InstrAttribValue, "0");
@@ -91,6 +96,10 @@ void Application::onMessage(const FIX44::SecurityList& message, const FIX::Sessi
       ",'" << reqID << "'" <<
     ") ";
     sep = ',';
+
+    /* Symbol : map - vector */
+    m_symbol[symbol.getString()] = (i - 1);
+    rate[ m_symbol[symbol.getString()] ].Symbol = symbol.getString();
   }
 
   /* Insert security list :: Currency Pair Symbol - Decimal Places  */
@@ -100,4 +109,7 @@ void Application::onMessage(const FIX44::SecurityList& message, const FIX::Sessi
     "  `ReqID`           = VALUES(`ReqID`)            ";
   FIX::MySQLQuery q2( s2.str() );
   m_sql->execute( q2 );
+
+  /* Get Market Data */
+  MarketDataRequest( symbol.getString(), 1, true, true );
 }

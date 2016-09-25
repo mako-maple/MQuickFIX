@@ -57,7 +57,10 @@
 #include "PartyDetailsListReport.h"                         // < CG >
 #include "OrderRateUpdate.h"                                // < PU >
 
+#include "Rate.h"
+
 #include <queue>
+#include <vector>
 #include <map>
 #include <syslog.h>
 
@@ -104,6 +107,9 @@ private:
   std::string m_accountID;
   std::string m_partyID;
 
+  std::map<std::string, int> m_symbol;
+  std::vector<Rate> rate;
+
   void onCreate( const FIX::SessionID& ) {}
   void onLogon( const FIX::SessionID& sessionID );
   void onLogout( const FIX::SessionID& sessionID );
@@ -145,7 +151,7 @@ private:
   /* F  */ void OrderCancelRequest();
   /* G  */ void OrderCancelReplaceRequest();
   /* H  */ void OrderStatusRequest();
-  /* V  */ void MarketDataRequest( const std::string&, int, const bool&, const FIX::SubscriptionRequestType& );
+  /* V  */ void MarketDataRequest( const std::string&, int, const bool&, const bool& );
            void InsertMarketDataRequest( const FIX::Message& );
   /* AF */ void OrderMassStatusRequest();
   /* AN */ void RequestForPositions( const std::string& clearingBusinessDate = "" );

@@ -7,7 +7,7 @@
 /* X  */
 void Application::onMessage(const FIX44::MarketDataIncrementalRefresh& message, const FIX::SessionID& sessionID )
 {
-  std::cout << std::endl << "<X> MarketDataIncrementalRefresh:" << message.toXML() << std::endl;
+//  std::cout << std::endl << "<X> MarketDataIncrementalRefresh:" << message.toXML() << std::endl;
 
   /* init message data */
   /* 52   */ FIX::FieldBase respDateTime(FIX::FIELD::SendingTime, "");
@@ -47,6 +47,11 @@ void Application::InsertMarketData( const FIX::Message& message )
   /* 52  */ message.getHeader().getFieldIfSet(respDateTime);
   /* 268 */ message.getFieldIfSet(entries);
 
+/*
+  +  RespDateTime        symbol   Bid      size     order  spred   Offer    size    order  High     Low    
+  +  mm/dd hh:mm:ss.sss  USD/JPY  108.050  2000000  1      0.5000  108.055  100000  1      108.328  107.880
+*/
+
   /* Loop: Instrment Group */
   for( int i=1; i <= std::stoi(entries.getString()); i++ )
   {
@@ -54,7 +59,6 @@ void Application::InsertMarketData( const FIX::Message& message )
     message.getGroup(i, e);
 
     /* init group data */
-    /* 278  */ FIX::FieldBase entryID(FIX::FIELD::MDEntryID, "0");
     /* 55   */ FIX::FieldBase symbol(FIX::FIELD::Symbol, "NA");
     /* 269  */ FIX::FieldBase type(FIX::FIELD::MDEntryType, "0");
     /* 279  */ FIX::FieldBase action(FIX::FIELD::MDUpdateAction, "0");
@@ -63,13 +67,16 @@ void Application::InsertMarketData( const FIX::Message& message )
     /* 346  */ FIX::FieldBase orders(FIX::FIELD::NumberOfOrders, "0");
 
     /* get group data */
-    e.getFieldIfSet(entryID);
     e.getFieldIfSet(symbol);
     e.getFieldIfSet(type);
     e.getFieldIfSet(action);
     e.getFieldIfSet(px);
     e.getFieldIfSet(size);
     e.getFieldIfSet(orders);
+
+    /* check update */
+    if ( std::stoi(action.getString()) != FIX::MDUpdateAction_NEW )
+      return;
 
     std::ostringstream s;
     s <<  "INSERT INTO `market_data` SET " <<
@@ -91,6 +98,35 @@ void Application::InsertMarketData( const FIX::Message& message )
 
     FIX::MySQLQuery q( s.str() );
     m_sql->execute( q );
+
+    /* rate */
+    rate[ m_symbol[symbol.getString()] ].Time = respDateTime.getString();
+    switch( std::stoi(type.getString()) )
+    {
+      case FIX::MDEntryType_BID :
+        rate[ m_symbol[symbol.getString()] ].Bid = std::stod(px.getString());
+        rate[ m_symbol[symbol.getString()] ].BidSize = std::stol(size.getString());
+        rate[ m_symbol[symbol.getString()] ].BidOrder = std::stol(orders.getString());
+        break;
+
+      case FIX::MDEntryType_OFFER :
+        rate[ m_symbol[symbol.getString()] ].Ask = std::stod(px.getString());
+        rate[ m_symbol[symbol.getString()] ].AskSize = std::stol(size.getString());
+        rate[ m_symbol[symbol.getString()] ].AskOrder = std::stol(orders.getString());
+        break;
+
+      case FIX::MDEntryType_TRADING_SESSION_HIGH_PRICE :
+        rate[ m_symbol[symbol.getString()] ].High = std::stod(px.getString());
+        break;
+
+      case FIX::MDEntryType_TRADING_SESSION_LOW_PRICE :
+        rate[ m_symbol[symbol.getString()] ].Low = std::stod(px.getString());
+        break;
+
+      case FIX::MDEntryType_TRADING_SESSION_VWAP_PRICE :
+        rate[ m_symbol[symbol.getString()] ].Spred = std::stod(px.getString());
+        break;
+    }
   }
 }
 
