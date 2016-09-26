@@ -36,7 +36,8 @@ throw( FIX::FieldNotFound, FIX::IncorrectDataFormat, FIX::IncorrectTagValue, FIX
   else
     crack( message, sessionID );
 
-  std::cout << std::endl << "IN: " << message << std::endl;
+  if( msgTypeValue != "X" )
+    std::cout << std::endl << "IN: " << message << std::endl;
 }
 
 void Application::toApp( FIX::Message& message, const FIX::SessionID& sessionID )
@@ -65,6 +66,7 @@ void Application::run()
         << "test1) testRequest Trade" << std::endl
         << "test2) testRequest Ratefeed" << std::endl
         << "symbol) Security List Request" << std::endl
+        << "AN) Request For Positions" << std::endl
         <<  std::endl
         << "Vj) MarketDataRequest USD/JPY TOP Aggr" << std::endl
         << "Ve) MarketDataRequest EUR/USD TOP Aggr" << std::endl
@@ -82,6 +84,7 @@ void Application::run()
       else if ( action == "test1" ) TestRequest( SessionTypeTrade );
       else if ( action == "test2" ) TestRequest( SessionTypeRatefeed );
       else if ( action == "symbol" ) SecurityListRequest();
+      else if ( action == "AN" ) RequestForPositions();
 
       else if ( action == "Vj" ) MarketDataRequest( "USD/JPY", 1, true,  true );
       else if ( action == "Ve" ) MarketDataRequest( "EUR/USD", 1, true,  true );

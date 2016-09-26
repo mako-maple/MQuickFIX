@@ -75,7 +75,7 @@ void Application::InsertMarketData( const FIX::Message& message )
     e.getFieldIfSet(orders);
 
     /* check update */
-    if ( std::stoi(action.getString()) != FIX::MDUpdateAction_NEW )
+    if ( *action.getString().c_str() != FIX::MDUpdateAction_NEW )
       return;
 
     std::ostringstream s;
@@ -101,7 +101,7 @@ void Application::InsertMarketData( const FIX::Message& message )
 
     /* rate */
     rate[ m_symbol[symbol.getString()] ].Time = respDateTime.getString();
-    switch( std::stoi(type.getString()) )
+    switch( *type.getString().c_str() )
     {
       case FIX::MDEntryType_BID :
         rate[ m_symbol[symbol.getString()] ].Bid = std::stod(px.getString());

@@ -58,7 +58,7 @@ void Application::onMessage(const FIX44::MarketDataRequestReject& message, const
     /* 55  Symbol      */ q2.getValue(0,0),
     /* 264 Depth       */ 1,
     /* 266 Aggregate   */ true,
-    /* 263 RequestType */ FIX::SubscriptionRequestType_DISABLE_PREVIOUS_SNAPSHOT_PLUS_UPDATE_REQUEST 
+    /* 263 RequestType */ true
     );
   }
 }
