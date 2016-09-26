@@ -74,7 +74,7 @@ void Application::run()
         << "Vjq) MarketDataRequest USD/JPY STOP" << std::endl
         << "Veq) MarketDataRequest EUR/USD STOP" << std::endl
         <<  std::endl
-        << "rate) MarketData Rate List" << std::endl
+        << "r) MarketData Rate List" << std::endl
         << "rJ) MarketData USD/JPY" << std::endl
         <<  std::endl
         << "Action: ";
@@ -92,7 +92,7 @@ void Application::run()
       else if ( action == "Vjq" ) MarketDataRequest( "USD/JPY", 0, false,  false );
       else if ( action == "Veq" ) MarketDataRequest( "EUR/USD", 0, false,  false );
 
-      else if ( action == "rate" ) 
+      else if ( action == "r" ) 
         for (auto symbol : m_symbol)
           std::cout << symbol.first << " " 
             << rate[symbol.second].Time << " "
