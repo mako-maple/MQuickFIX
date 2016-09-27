@@ -147,7 +147,14 @@ private:
   /* q  */ void OrderMassCancelRequest();
   /* x  */ void SecurityListRequest();
            void InsertSecurityListRequest( const FIX::Message& );
-  /* D  */ void NewOrderSingle();
+  /* D  */ void NewOrderSingle(
+                  /* 40   OrderType */ const char&,
+                  /* 54   Side */ const char&,
+                  /* 55   Symbol */ const std::string&,
+                  /* 38   Quantity */ const long& = 10000,
+                  /* 44   Price */ const double& = 0.0,
+                  /* 526  SecondaryClOrdID */ const std::string& = ""  
+                );
   /* F  */ void OrderCancelRequest();
   /* G  */ void OrderCancelReplaceRequest();
   /* H  */ void OrderStatusRequest();

@@ -4011,6 +4011,8 @@
    <value enum='L' description='PREVIOUS_FUND_VALUATION_POINT' />
    <value enum='M' description='NEXT_FUND_VALUATION_POINT' />
    <value enum='P' description='PEGGED' />
+   <value enum='C' description='FOREX_MARKET' />
+   <value enum='F' description='FOREX_LIMIT' />
   </field>
   <field number='41' name='OrigClOrdID' type='STRING' />
   <field number='42' name='OrigTime' type='UTCTIMESTAMP' />
