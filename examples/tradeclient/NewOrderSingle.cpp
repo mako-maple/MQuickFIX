@@ -41,6 +41,12 @@ void Application::NewOrderSingle(
   /* 38   */ message.set(FIX::OrderQty(qty));
   /* 110  */ // message.set(FIX::MinQty(qty));
 
+  switch( ordType )
+  {
+    case FIX::OrdType_FOREX_F :
+      /* 44   */ message.set(FIX::Price(price));
+  }
+
   SetMessageHeader( message );
   FIX::Session::sendToTarget( message );
   std::cout << "<D> NewOrderSingle: " << std::endl << message.toXML() << std::endl;

@@ -26,19 +26,17 @@ void Application::toAdmin( FIX::Message& message, const FIX::SessionID& sessionI
 void Application::fromApp( const FIX::Message& message, const FIX::SessionID& sessionID )
 throw( FIX::FieldNotFound, FIX::IncorrectDataFormat, FIX::IncorrectTagValue, FIX::UnsupportedMessageType )
 {
-  // const std::string& msgTypeValue = message.getHeader().getField( FIX::FIELD::MsgType );
-  std::cout << std::endl << "IN: " << message << std::endl;
-
- // if( msgTypeValue == "PU" )
-  //  onMessage( (const FIX44::OrderRateUpdate&)message, sessionID );
-//  else
-//  if( msgTypeValue == "CG" )
- //   onMessage( (const FIX44::PartyDetailsListReport&)message, sessionID );
-//  else
-    crack( message, sessionID );
-
-//  if( msgTypeValue != "X" )
+  const std::string& msgTypeValue = message.getHeader().getField( FIX::FIELD::MsgType );
+  if( msgTypeValue != "X" )
     std::cout << std::endl << "IN: " << message << std::endl;
+
+  if( msgTypeValue == "PU" )
+    onMessage( (const FIX44::OrderRateUpdate&)message, sessionID );
+  else
+  if( msgTypeValue == "CG" )
+    onMessage( (const FIX44::PartyDetailsListReport&)message, sessionID );
+  else
+    crack( message, sessionID );
 }
 
 void Application::toApp( FIX::Message& message, const FIX::SessionID& sessionID )
@@ -68,6 +66,7 @@ void Application::run()
         << "test2) testRequest Ratefeed" << std::endl
         << "symbol) Security List Request" << std::endl
         << "AN) Request For Positions" << std::endl
+        << "H) Order Status Request" << std::endl
         <<  std::endl
         << "CB)  Order <C> Market Buy" << std::endl
         << "CBR) Order <C> Market Buy - Reversing Trade" << std::endl
@@ -91,6 +90,7 @@ void Application::run()
       else if ( action == "test2" ) TestRequest( SessionTypeRatefeed );
       else if ( action == "symbol" ) SecurityListRequest();
       else if ( action == "AN" ) RequestForPositions();
+      else if ( action == "H" ) OrderStatusRequest();
 
       else if ( action == "CB" ) NewOrderSingle(
                                    /* 40   */ FIX::OrdType_FOREX_C,

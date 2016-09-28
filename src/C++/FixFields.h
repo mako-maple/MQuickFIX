@@ -1534,5 +1534,6 @@ namespace FIX
   DEFINE_INT(StreamAsgnAckType);
   DEFINE_UTCTIMESTAMP(RelSymTransactTime);
   DEFINE_INT(StreamAsgnType);
+  DEFINE_BOOLEAN(OpenOrders);
 }
 #endif //FIX_FIELDS_H

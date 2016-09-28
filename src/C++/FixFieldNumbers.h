@@ -1532,6 +1532,7 @@ namespace FIX
     const int StreamAsgnAckType = 1503;
     const int RelSymTransactTime = 1504;
     const int StreamAsgnType = 1617;
+    const int OpenOrders = 7559;
   }
 }
 #endif //FIX_FIELDNUMBERS_H

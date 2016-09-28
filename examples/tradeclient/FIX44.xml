@@ -531,6 +531,7 @@
    <component name='FinancingDetails' required='N' />
    <component name='UndInstrmtGrp' required='N' />
    <field name='Side' required='Y' />
+   <field name='OpenOrders' required='N' />
   </message>
   <message name='AllocationInstruction' msgcat='app' msgtype='J'>
    <field name='AllocID' required='Y' />
@@ -6631,5 +6632,9 @@
    <value enum='8' description='MARGIN_ROLLER_COMPLETE' />
   </field>
   <field number='1513' name='NoPartyList' type='NUMINGROUP' />
+  <field number='7559' name='OpenOrders' type='BOOLEAN'>
+    <value enum='Y' description='YES' />
+    <value enum='N' description='NO' />
+  </field>
  </fields>
 </fix>
