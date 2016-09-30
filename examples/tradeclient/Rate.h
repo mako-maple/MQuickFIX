@@ -10,4 +10,5 @@ typedef struct {
   double High;
   double Low;
   std::string Time;
+  bool feedStatus;
 } Rate;

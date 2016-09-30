@@ -12,7 +12,7 @@ void Application::onMessage(const FIX44::TradingSessionStatus& message, const FI
   switch( std::stoi(message.getField(FIX::FIELD::TradSesStatus)) )
   {
     case FIX::TradSesStatus_OPEN :
-      SecurityListRequest();
+//      SecurityListRequest();
       break;
     
     case FIX::TradSesStatus_CLOSED :

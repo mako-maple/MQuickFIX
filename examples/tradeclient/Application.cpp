@@ -65,7 +65,9 @@ void Application::run()
         << "test1) testRequest Trade" << std::endl
         << "test2) testRequest Ratefeed" << std::endl
         << "symbol) Security List Request" << std::endl
-        << "AN) Request For Positions" << std::endl
+        << "ANT) Request For Positions - Type Trade" << std::endl
+        << "ANP) Request For Positions - Type Positions" << std::endl
+        << "AF) Order Mass Status Request" << std::endl
         << "H) Order Status Request" << std::endl
         <<  std::endl
         << "CB)  Order <C> Market Buy" << std::endl
@@ -89,9 +91,41 @@ void Application::run()
       else if ( action == "test1" ) TestRequest( SessionTypeTrade );
       else if ( action == "test2" ) TestRequest( SessionTypeRatefeed );
       else if ( action == "symbol" ) SecurityListRequest();
-      else if ( action == "AN" ) RequestForPositions();
+      else if ( action == "ANT" ) RequestForPositions( FIX::PosReqType_TRADES );
+      else if ( action == "ANP" ) RequestForPositions( FIX::PosReqType_POSITIONS );
+
+      else if ( action == "ANTB" ) 
+      {
+        std::string day;
+        std::cout << "Bussiness Date(YYYYMMDD): ";
+        std::cin >> day;
+        RequestForPositions(FIX::PosReqType_TRADES, day);
+      }
+      else if ( action == "ANPB" ) 
+      {
+        std::string day;
+        std::cout << "Bussiness Date(YYYYMMDD): ";
+        std::cin >> day;
+        RequestForPositions(FIX::PosReqType_POSITIONS, day);
+      }
+
+      else if ( action == "AF" ) OrderMassStatusRequest();
       else if ( action == "H" ) OrderStatusRequest();
 
+      else if ( action == "FB" ) NewOrderSingle(
+                                   /* 40   */ FIX::OrdType_FOREX_F,
+                                   /* 54   */ FIX::Side_BUY,
+                                   /* 55   */ "USD/JPY",
+                                   /* 38   */ 10000,
+                                   /* 44   */ rate[m_symbol["USD/JPY"]].Ask - 0.5
+                                 );
+      else if ( action == "FS" ) NewOrderSingle(
+                                   /* 40   */ FIX::OrdType_FOREX_F,
+                                   /* 55   */ FIX::Side_SELL,
+                                   /* 55   */ "USD/JPY",
+                                   /* 38   */ 10000,
+                                   /* 44   */ rate[m_symbol["USD/JPY"]].Bid + 0.5
+                                 );
       else if ( action == "CB" ) NewOrderSingle(
                                    /* 40   */ FIX::OrdType_FOREX_C,
                                    /* 54   */ FIX::Side_BUY,
@@ -211,9 +245,8 @@ FIX::MySQLConnection *Application::MySQLConnect()
 
 std::string Application::getSetting( const char* key )
 {
-  std::string ret = "";
   const FIX::Dictionary dic = m_settings.get();
-  if (dic.has(key)) ret = dic.getString(key);
+  if (dic.has(key)) return dic.getString(key);
   return key;
 }
 

@@ -1499,6 +1499,7 @@
    <component name='Instrument' required='N' />
    <component name='UnderlyingInstrument' required='N' />
    <field name='Side' required='N' />
+   <field name='TransactTime' required='Y' />
   </message>
   <message name='QuoteRequestReject' msgcat='app' msgtype='AG'>
    <field name='QuoteReqID' required='Y' />

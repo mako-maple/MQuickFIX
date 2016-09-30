@@ -22,7 +22,10 @@ void Application::MarketDataRequest(
   if ( subType )
     /* 263  */ message.set(FIX::SubscriptionRequestType( FIX::SubscriptionRequestType_SNAPSHOT_PLUS_UPDATES ));
   else
+  {
     /* 263  */ message.set(FIX::SubscriptionRequestType( FIX::SubscriptionRequestType_DISABLE_PREVIOUS_SNAPSHOT_PLUS_UPDATE_REQUEST ));
+    rate[ m_symbol[target] ].feedStatus = false;
+  }
 
   std::vector<char>c;
   c.push_back(FIX::MDEntryType_BID);                           /* 0 */

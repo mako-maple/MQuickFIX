@@ -161,7 +161,7 @@ private:
   /* V  */ void MarketDataRequest( const std::string&, int, const bool&, const bool& );
            void InsertMarketDataRequest( const FIX::Message& );
   /* AF */ void OrderMassStatusRequest();
-  /* AN */ void RequestForPositions( const std::string& clearingBusinessDate = "" );
+  /* AN */ void RequestForPositions( const int& pos = FIX::PosReqType_TRADES, const std::string& clearingBusinessDate = "" );
 
   void SetMessageHeader( FIX::Message&, const char* = SessionTypeTrade );
   FIX::MySQLConnection *MySQLConnect();

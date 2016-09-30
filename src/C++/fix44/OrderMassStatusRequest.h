@@ -134,6 +134,7 @@ namespace FIX44
     FIELD_SET(*this, FIX::UnderlyingCurrentValue);
     FIELD_SET(*this, FIX::UnderlyingEndValue);
     FIELD_SET(*this, FIX::Side);
+    FIELD_SET(*this, FIX::TransactTime);
   };
 
 }

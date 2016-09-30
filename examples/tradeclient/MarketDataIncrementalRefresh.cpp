@@ -76,7 +76,10 @@ void Application::InsertMarketData( const FIX::Message& message )
 
     /* check update */
     if ( *action.getString().c_str() != FIX::MDUpdateAction_NEW )
+    {
+      rate[ m_symbol[symbol.getString()] ].feedStatus = false;
       return;
+    }
 
     std::ostringstream s;
     s <<  "INSERT INTO `market_data` SET " <<
@@ -101,6 +104,7 @@ void Application::InsertMarketData( const FIX::Message& message )
 
     /* rate */
     rate[ m_symbol[symbol.getString()] ].Time = respDateTime.getString();
+    rate[ m_symbol[symbol.getString()] ].feedStatus = true;
     switch( *type.getString().c_str() )
     {
       case FIX::MDEntryType_BID :

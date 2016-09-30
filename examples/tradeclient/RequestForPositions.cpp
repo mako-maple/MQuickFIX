@@ -5,13 +5,13 @@
 #include <iostream>
 
 /* AN */
-void Application::RequestForPositions( const std::string& clearingBusinessDate )
+void Application::RequestForPositions( const int& reqType, const std::string& clearingBusinessDate )
 {
   FIX44::RequestForPositions message;
 
   /* 710  */ message.set( FIX::PosReqID( "PosReq_" + YmdHMSs() ));
-  /* 724  */ message.set( FIX::PosReqType( FIX::PosReqType_TRADES /* 1 */ ));
   /* 263  */ message.set( FIX::SubscriptionRequestType(FIX::SubscriptionRequestType_SNAPSHOT_PLUS_UPDATES /* 1 */ ) );
+  /* 724  */ message.set( FIX::PosReqType( reqType )); /* 0 Position, 1 Trade */
 
   /* 453  */ FIX44::RequestForPositions::NoPartyIDs parties;
   /* 448  */ parties.set(FIX::PartyID( m_partyID ));

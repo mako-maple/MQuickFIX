@@ -54,11 +54,14 @@ void Application::onMessage(const FIX44::MarketDataRequestReject& message, const
   /* not stopped - STOP request */
   if ( q.rows() != 0 ) 
   {
-    MarketDataRequest( 
-    /* 55  Symbol      */ q.getValue(0,0),
-    /* 264 Depth       */ 1,
-    /* 266 Aggregate   */ true,
-    /* 263 RequestType */ true
+    if ( rate[ m_symbol[q.getValue(0,0)] ].feedStatus )
+    {
+      MarketDataRequest( 
+      /* 55  Symbol      */ q.getValue(0,0),
+      /* 264 Depth       */ 1,
+      /* 266 Aggregate   */ true,
+      /* 263 RequestType */ true
     );
+    }
   }
 }
