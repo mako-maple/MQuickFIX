@@ -41,6 +41,7 @@ void Application::onMessage(const FIX44::MarketDataIncrementalRefresh& message, 
 
 void Application::InsertMarketData( const FIX::Message& message )
 {
+  /* 55   */ FIX::FieldBase symbol(FIX::FIELD::Symbol, "NA");
   /* 52   */ FIX::FieldBase respDateTime(FIX::FIELD::SendingTime, "");
   /* 268  */ FIX::FieldBase entries(FIX::FIELD::NoMDEntries, "0");
 
@@ -59,7 +60,6 @@ void Application::InsertMarketData( const FIX::Message& message )
     message.getGroup(i, e);
 
     /* init group data */
-    /* 55   */ FIX::FieldBase symbol(FIX::FIELD::Symbol, "NA");
     /* 269  */ FIX::FieldBase type(FIX::FIELD::MDEntryType, "0");
     /* 279  */ FIX::FieldBase action(FIX::FIELD::MDUpdateAction, "0");
     /* 270  */ FIX::FieldBase px(FIX::FIELD::MDEntryPx, "0");
@@ -132,6 +132,36 @@ void Application::InsertMarketData( const FIX::Message& message )
         break;
     }
   }
+
+  std::ostringstream s2;
+  s2 <<  "INSERT INTO `MD` SET " <<
+    /*-55        */  "   `Symbol`        = '" << symbol        << "' " <<
+    /*-346 269=0 */  " , `BidOrders`     = '" << rate[m_symbol[symbol.getString()] ].BidOrder  << "' " <<
+    /*-271 269=0 */  " , `BidSize`       = '" << rate[m_symbol[symbol.getString()] ].BidSize   << "' " <<
+    /*-270 269=0 */  " , `Bid`           = '" << rate[m_symbol[symbol.getString()] ].Bid       << "' " <<
+    /*-270 269=9 */  " , `Spred`         = '" << rate[m_symbol[symbol.getString()] ].Spred     << "' " <<
+    /*-270 269=1 */  " , `Ask`           = '" << rate[m_symbol[symbol.getString()] ].Ask       << "' " <<
+    /*-271 269=1 */  " , `AskSize`       = '" << rate[m_symbol[symbol.getString()] ].AskSize   << "' " <<
+    /*-346 269=1 */  " , `AskOrders`     = '" << rate[m_symbol[symbol.getString()] ].AskOrder  << "' " <<
+    /*-270 269=7 */  " , `High`          = '" << rate[m_symbol[symbol.getString()] ].High      << "' " <<
+    /*-270 269=8 */  " , `Log`           = '" << rate[m_symbol[symbol.getString()] ].Low       << "' " <<
+    /*-52        */  " , `RespDateTime`  = '" << respDateTime  << "' " <<
+    " ON DUPLICATE KEY UPDATE " <<
+      "   `Symbol`       = VALUES( `Symbol` ) "       <<
+      " , `BidOrders`    = VALUES( `BidOrders` ) "    <<
+      " , `BidSize`      = VALUES( `BidSize` ) "      <<
+      " , `Bid`          = VALUES( `Bid` ) "          <<
+      " , `Spred`        = VALUES( `Spred` ) "        <<
+      " , `Ask`          = VALUES( `Ask` ) "          <<
+      " , `AskSize`      = VALUES( `AskSize` ) "      <<
+      " , `AskOrders`    = VALUES( `AskOrders` ) "    <<
+      " , `High`         = VALUES( `High` ) "         <<
+      " , `Log`          = VALUES( `Log` ) "          <<
+      " , `RespDateTime` = VALUES( `RespDateTime` ) " ;
+
+    FIX::MySQLQuery q2( s2.str() );
+    m_sql->execute( q2 );
+
 }
 
 /* - message sample Depth = TOP ---

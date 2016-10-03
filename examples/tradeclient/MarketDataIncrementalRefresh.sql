@@ -47,3 +47,66 @@ BEGIN
 END;
 //
 DELIMITER ;
+
+DROP TABLE IF EXISTS MD;
+CREATE TABLE MD
+(
+  `Symbol`           VARCHAR(7)    NOT NULL                  COMMENT '55',
+  `BidOrders`        INT UNSIGNED  NULL                      COMMENT '346 269=0',
+  `BidSize`          INT UNSIGNED  NULL                      COMMENT '271 269=0',
+  `Bid`              REAL          NULL                      COMMENT '270 269=0',
+  `Spred`            REAL          NULL                      COMMENT '270 269=9',
+  `Ask`              REAL          NULL                      COMMENT '270 269=1',
+  `AskSize`          INT UNSIGNED  NULL                      COMMENT '271 269=1',
+  `AskOrders`        INT UNSIGNED  NULL                      COMMENT '346 269=1',
+  `High`             REAL          NULL                      COMMENT '270 269=7',
+  `Log`              REAL          NULL                      COMMENT '270 269=8',
+  `RespDateTime`     CHAR(21)      NULL                      COMMENT '52',
+  PRIMARY KEY (`Symbol`)
+)
+COMMENT 'MarketData Depth=TOP';
+
+
+DROP TABLE IF EXISTS MD_hist;
+CREATE TABLE MD_hist
+(
+  `id`            BIGINT UNSIGNED  NOT NULL  AUTO_INCREMENT,
+  `Symbol`           VARCHAR(7)    NOT NULL                  COMMENT '55',
+  `BidOrders`        INT UNSIGNED  NULL                      COMMENT '346 269=0',
+  `BidSize`          INT UNSIGNED  NULL                      COMMENT '271 269=0',
+  `Bid`              REAL          NULL                      COMMENT '270 269=0',
+  `Spred`            REAL          NULL                      COMMENT '270 269=9',
+  `Ask`              REAL          NULL                      COMMENT '270 269=1',
+  `AskSize`          INT UNSIGNED  NULL                      COMMENT '271 269=1',
+  `AskOrders`        INT UNSIGNED  NULL                      COMMENT '346 269=1',
+  `High`             REAL          NULL                      COMMENT '270 269=7',
+  `Log`              REAL          NULL                      COMMENT '270 269=8',
+  `RespDateTime`     CHAR(21)      NULL                      COMMENT '52',
+  PRIMARY KEY (`id`),
+  INDEX idx_MD_hist_Symbol (`Symbol`),
+  INDEX idx_MD_hist_DateTime (`RespDateTime`)
+)
+COMMENT 'MarketData Depth=TOP';
+
+
+DROP TRIGGER IF EXISTS trg_bf_u_MD;
+DELIMITER //
+CREATE TRIGGER trg_bf_u_MD
+  BEFORE UPDATE ON MD FOR EACH ROW
+BEGIN
+  INSERT INTO MD_hist SET 
+    `Symbol`       = NEW.`Symbol`
+  , `BidOrders`    = NEW.`BidOrders`
+  , `BidSize`      = NEW.`BidSize`
+  , `Bid`          = NEW.`Bid`
+  , `Spred`        = NEW.`Spred`
+  , `Ask`          = NEW.`Ask`
+  , `AskSize`      = NEW.`AskSize`
+  , `AskOrders`    = NEW.`AskOrders`
+  , `High`         = NEW.`High`
+  , `Log`          = NEW.`Log`
+  , `RespDateTime` = NEW.`RespDateTime`
+  ;
+END;
+//
+DELIMITER ;

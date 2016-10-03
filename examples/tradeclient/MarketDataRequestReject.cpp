@@ -58,10 +58,10 @@ void Application::onMessage(const FIX44::MarketDataRequestReject& message, const
     {
       MarketDataRequest( 
       /* 55  Symbol      */ q.getValue(0,0),
-      /* 264 Depth       */ 1,
-      /* 266 Aggregate   */ true,
-      /* 263 RequestType */ true
-    );
+      /* 264 Depth       */ 0,
+      /* 266 Aggregate   */ false,
+      /* 263 RequestType */ false
+      );
     }
   }
 }
