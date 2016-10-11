@@ -11,6 +11,7 @@ void Application::NewOrderSingle(
   /* 55   */ const std::string &symbol,
   /* 38   */ const long &qty,
   /* 44   */ const double &price,
+  /* 662  */ const double &slip,
   /* 526  */ const std::string &secClOrdID
 )
 {
@@ -43,8 +44,12 @@ void Application::NewOrderSingle(
 
   switch( ordType )
   {
+    case FIX::OrdType_BENCHMARK :
+      /* 662  */ message.set(FIX::BenchmarkPrice(slip));
+
     case FIX::OrdType_FOREX_F :
       /* 44   */ message.set(FIX::Price(price));
+      break;
   }
 
   SetMessageHeader( message );

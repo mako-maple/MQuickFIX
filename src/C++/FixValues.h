@@ -366,6 +366,7 @@ namespace FIX
   const char OrdType_FOREX_SWAP = 'G';
   const char OrdType_FOREX_PREVIOUSLY_QUOTED = 'H';
   const char OrdType_MARKET_WITH_LEFT_OVER_AS_LIMIT = 'K';
+  const char OrdType_BENCHMARK = 'T';
   const char OrdType_COUNTER_ORDER_SELECTION = 'Q';
   const char Rule80A_AGENCY_SINGLE_ORDER = 'A';
   const char Rule80A_PROGRAM_ORDER_NON_INDEX_ARB_FOR_MEMBER_FIRM_ORG = 'C';

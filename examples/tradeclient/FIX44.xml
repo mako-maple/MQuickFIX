@@ -4015,6 +4015,7 @@
    <value enum='P' description='PEGGED' />
    <value enum='C' description='FOREX_MARKET' />
    <value enum='F' description='FOREX_LIMIT' />
+   <value enum='T' description='FOREX_BENCHMARK' />
   </field>
   <field number='41' name='OrigClOrdID' type='STRING' />
   <field number='42' name='OrigTime' type='UTCTIMESTAMP' />

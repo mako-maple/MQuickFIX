@@ -10,6 +10,7 @@ void Application::onLogon( const FIX::SessionID& sessionID )
 
 void Application::onLogout( const FIX::SessionID& sessionID )
 {
+  m_tradingSessionStatus = 0;
   std::cout << std::endl << "Logout - " << sessionID << std::endl;
 }
 
@@ -71,8 +72,15 @@ void Application::run()
         << "H) Order Status Request" << std::endl
         <<  std::endl
         << "CB)  Order <C> Market Buy" << std::endl
-        << "CBR) Order <C> Market Buy - Reversing Trade" << std::endl
         << "CS)  Order <C> Market Sell" << std::endl
+        <<  std::endl
+        << "FB)  Order <C> Limit Buy" << std::endl
+        << "FS)  Order <C> Limit Sell" << std::endl
+        <<  std::endl
+        << "TB)  Order <C> Limit(Slip) Buy" << std::endl
+        << "TS)  Order <C> Limit(Slip) Sell" << std::endl
+        <<  std::endl
+        << "CBR) Order <C> Market Buy - Reversing Trade" << std::endl
         << "CSR) Order <C> Market Sell - Reversing Trade" << std::endl
         <<  std::endl
         << "Vj) MarketDataRequest USD/JPY TOP Aggr" << std::endl
@@ -126,6 +134,22 @@ void Application::run()
                                    /* 38   */ 10000,
                                    /* 44   */ rate[m_symbol["USD/JPY"]].Bid + 0.5
                                  );
+      else if ( action == "TB" ) NewOrderSingle(
+                                   /* 40   */ FIX::OrdType_BENCHMARK,
+                                   /* 54   */ FIX::Side_BUY,
+                                   /* 55   */ "USD/JPY",
+                                   /* 38   */ 10000,
+                                   /* 44   */ rate[m_symbol["USD/JPY"]].Ask - 0.5,
+                                   /* 662  */ 0.010
+                                 );
+      else if ( action == "TS" ) NewOrderSingle(
+                                   /* 40   */ FIX::OrdType_BENCHMARK,
+                                   /* 55   */ FIX::Side_SELL,
+                                   /* 55   */ "USD/JPY",
+                                   /* 38   */ 10000,
+                                   /* 44   */ rate[m_symbol["USD/JPY"]].Bid + 0.5,
+                                   /* 662  */ 0.010
+                                 );
       else if ( action == "CB" ) NewOrderSingle(
                                    /* 40   */ FIX::OrdType_FOREX_C,
                                    /* 54   */ FIX::Side_BUY,
@@ -150,6 +174,7 @@ void Application::run()
                                    /* 55   */ "USD/JPY",
                                    /* 38   */ 10000,
                                    /* 44   */ 0,
+                                   /* 662  */ 0,
                                    /* 526  */ ordID
                                  );
       }
@@ -164,6 +189,7 @@ void Application::run()
                                    /* 55   */ "USD/JPY",
                                    /* 38   */ 10000,
                                    /* 44   */ 0,
+                                   /* 662  */ 0,
                                    /* 526  */ ordID
                                  );
       }

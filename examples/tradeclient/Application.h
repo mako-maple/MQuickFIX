@@ -85,6 +85,7 @@ public:
     m_sql = MySQLConnect();
     m_accountID = getSetting("AccountID");
     m_partyID = getSetting("PartyID");
+    m_tradingSessionStatus = 0;
   }
 
   ~Application()
@@ -102,6 +103,7 @@ private:
   std::string m_pass;
   std::string m_host;
   short m_port;
+  short m_tradingSessionStatus;
   std::map<std::string, std::string> m_senderID;
   std::map<std::string, std::string> m_targetID;
   std::string m_accountID;
@@ -153,6 +155,7 @@ private:
                   /* 55   Symbol */ const std::string&,
                   /* 38   Quantity */ const long& = 10000,
                   /* 44   Price */ const double& = 0.0,
+                  /* 662  Slip */ const double& = 0.0,
                   /* 526  SecondaryClOrdID */ const std::string& = ""  
                 );
   /* F  */ void OrderCancelRequest();
