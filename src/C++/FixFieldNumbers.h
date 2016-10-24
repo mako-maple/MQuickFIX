@@ -1533,6 +1533,21 @@ namespace FIX
     const int RelSymTransactTime = 1504;
     const int StreamAsgnType = 1617;
     const int OpenOrders = 7559;
+    const int StopSide = 7534;
+    const int TrailBy = 7587;
+    const int OCOLeg1LimitRate = 7540;
+    const int OCOLeg2Type = 7541;
+    const int OCOLeg2Side = 7553;
+    const int OCOLeg2StopRate = 7542;
+    const int OCOLeg2StopSide = 7543;
+    const int OCOLeg2StopLimitRate = 7544;
+    const int IFDIfType= 7569;
+    const int IFDIfStopRate = 7570;
+    const int IFDThenType= 7535;
+    const int IFDThenSide = 7536;
+    const int IFDThenPrStopRate = 7537;
+    const int IFDThenPrLimitRate = 7538;
+    const int IFDThenPrStopSide = 7539;
   }
 }
 #endif //FIX_FIELDNUMBERS_H

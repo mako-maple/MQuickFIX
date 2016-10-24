@@ -1535,5 +1535,22 @@ namespace FIX
   DEFINE_UTCTIMESTAMP(RelSymTransactTime);
   DEFINE_INT(StreamAsgnType);
   DEFINE_BOOLEAN(OpenOrders);
+  DEFINE_CHAR(StopSide);
+  DEFINE_PRICE(TrailBy);
+
+  DEFINE_PRICE(OCOLeg1LimitRate);
+  DEFINE_CHAR(OCOLeg2Type);
+  DEFINE_CHAR(OCOLeg2Side);
+  DEFINE_PRICE(OCOLeg2StopRate);
+  DEFINE_CHAR(OCOLeg2StopSide);
+  DEFINE_PRICE(OCOLeg2StopLimitRate);
+
+  DEFINE_CHAR(IFDIfType);
+  DEFINE_PRICE(IFDIfStopRate);
+  DEFINE_CHAR(IFDThenType);
+  DEFINE_CHAR(IFDThenSide);
+  DEFINE_PRICE(IFDThenPrStopRate);
+  DEFINE_PRICE(IFDThenPrLimitRate);
+  DEFINE_CHAR(IFDThenPrStopSide);
 }
 #endif //FIX_FIELDS_H

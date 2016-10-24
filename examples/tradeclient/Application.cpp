@@ -125,6 +125,7 @@ void Application::run()
                                    /* 54   */ FIX::Side_BUY,
                                    /* 55   */ "USD/JPY",
                                    /* 38   */ 10000,
+                                   /* 59   */ FIX::TimeInForce_GOOD_TILL_CANCEL,
                                    /* 44   */ rate[m_symbol["USD/JPY"]].Ask - 0.5
                                  );
       else if ( action == "FS" ) NewOrderSingle(
@@ -132,6 +133,7 @@ void Application::run()
                                    /* 55   */ FIX::Side_SELL,
                                    /* 55   */ "USD/JPY",
                                    /* 38   */ 10000,
+                                   /* 59   */ FIX::TimeInForce_GOOD_TILL_CANCEL,
                                    /* 44   */ rate[m_symbol["USD/JPY"]].Bid + 0.5
                                  );
       else if ( action == "TB" ) NewOrderSingle(
@@ -139,6 +141,7 @@ void Application::run()
                                    /* 54   */ FIX::Side_BUY,
                                    /* 55   */ "USD/JPY",
                                    /* 38   */ 10000,
+                                   /* 59   */ FIX::TimeInForce_GOOD_TILL_CANCEL,
                                    /* 44   */ rate[m_symbol["USD/JPY"]].Ask - 0.5,
                                    /* 662  */ 0.010
                                  );
@@ -147,6 +150,7 @@ void Application::run()
                                    /* 55   */ FIX::Side_SELL,
                                    /* 55   */ "USD/JPY",
                                    /* 38   */ 10000,
+                                   /* 59   */ FIX::TimeInForce_GOOD_TILL_CANCEL,
                                    /* 44   */ rate[m_symbol["USD/JPY"]].Bid + 0.5,
                                    /* 662  */ 0.010
                                  );
@@ -165,32 +169,28 @@ void Application::run()
 
       else if ( action == "CBR" ) 
       {
-        std::string ordID;
-        std::cout << "OrderID: ";
-        std::cin >> ordID;
                                  NewOrderSingle(
                                    /* 40   */ FIX::OrdType_FOREX_C,
                                    /* 54   */ FIX::Side_SELL,
                                    /* 55   */ "USD/JPY",
                                    /* 38   */ 10000,
+                                   /* 59   */ FIX::TimeInForce_GOOD_TILL_CANCEL,
                                    /* 44   */ 0,
                                    /* 662  */ 0,
-                                   /* 526  */ ordID
+                                   /* 526  */ true
                                  );
       }
       else if ( action == "CSR" ) 
       {
-        std::string ordID;
-        std::cout << "OrderID: ";
-        std::cin >> ordID;
                                  NewOrderSingle(
                                    /* 40   */ FIX::OrdType_FOREX_C,
                                    /* 54   */ FIX::Side_BUY,
                                    /* 55   */ "USD/JPY",
                                    /* 38   */ 10000,
+                                   /* 59   */ FIX::TimeInForce_GOOD_TILL_CANCEL,
                                    /* 44   */ 0,
                                    /* 662  */ 0,
-                                   /* 526  */ ordID
+                                   /* 526  */ true
                                  );
       }
 

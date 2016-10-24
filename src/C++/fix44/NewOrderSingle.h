@@ -289,6 +289,22 @@ namespace FIX44
     FIELD_SET(*this, FIX::MoneyLaunderingStatus);
     FIELD_SET(*this, FIX::RegistID);
     FIELD_SET(*this, FIX::Designation);
+
+    FIELD_SET(*this, FIX::TrailBy);			// 7587
+    FIELD_SET(*this, FIX::OCOLeg1LimitRate);		// 7540
+    FIELD_SET(*this, FIX::OCOLeg2Type);			// 7541
+    FIELD_SET(*this, FIX::OCOLeg2Side);			// 7553
+    FIELD_SET(*this, FIX::OCOLeg2StopRate);		// 7542
+    FIELD_SET(*this, FIX::OCOLeg2StopSide);		// 7543
+    FIELD_SET(*this, FIX::OCOLeg2StopLimitRate);	// 7544
+
+    FIELD_SET(*this, FIX::IFDIfType);			// 7569;
+    FIELD_SET(*this, FIX::IFDIfStopRate);		// 7570;
+    FIELD_SET(*this, FIX::IFDThenType);			// 7535;
+    FIELD_SET(*this, FIX::IFDThenSide);			// 7536;
+    FIELD_SET(*this, FIX::IFDThenPrStopRate);		// 7537;
+    FIELD_SET(*this, FIX::IFDThenPrLimitRate);		// 7538;
+    FIELD_SET(*this, FIX::IFDThenPrStopSide);		// 7539;
   };
 
 }

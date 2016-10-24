@@ -8,8 +8,9 @@
 void Application::OrderMassStatusRequest()
 {
   FIX44::OrderMassStatusRequest message(
-    /* 584  */ FIX::MassStatusReqID( "OrderMassStatusReq_" + YmdHMSs() ),
-    /* 585  */ FIX::MassStatusReqType( FIX::MassStatusReqType_STATUS_FOR_ORDERS_FOR_A_PARTYID ) /* 8 only */
+    /* 584  */ FIX::MassStatusReqID( YmdHMSs().substr(16,1) ),
+    /* 585  */ FIX::MassStatusReqType( FIX::MassStatusReqType_STATUS_FOR_ALL_ORDERS ) /* 7 only */
+    /* 585  */ // FIX::MassStatusReqType( FIX::MassStatusReqType_STATUS_FOR_ORDERS_FOR_A_PARTYID ) /* 8 only */
   );
   /* 60   */ message.set(FIX::TransactTime());
 

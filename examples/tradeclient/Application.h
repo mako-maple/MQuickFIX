@@ -154,10 +154,21 @@ private:
                   /* 54   Side */ const char&,
                   /* 55   Symbol */ const std::string&,
                   /* 38   Quantity */ const long& = 10000,
+                  /* 59   TimeInForce */ const char& = FIX::TimeInForce_GOOD_TILL_CANCEL,
                   /* 44   Price */ const double& = 0.0,
                   /* 662  Slip */ const double& = 0.0,
-                  /* 526  SecondaryClOrdID */ const std::string& = ""  
+                  /* 526  SecondaryClOrdID */ const bool& = false
                 );
+
+           void Order_Limit(
+                  /* 54   Side */ const char&,
+                  /* 55   Symbol */ const std::string&,
+                  /* 38   Quantity */ const long& = 10000,
+                  /* 44   Price */ double = 0.0,
+                  /* 59   TimeInForce */ char = 0x00,
+                  /* 526  SecondaryClOrdID */ const bool& = false
+                );
+
   /* F  */ void OrderCancelRequest();
   /* G  */ void OrderCancelReplaceRequest();
   /* H  */ void OrderStatusRequest();

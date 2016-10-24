@@ -396,6 +396,15 @@
    <field name='MoneyLaunderingStatus' required='N' />
    <field name='RegistID' required='N' />
    <field name='Designation' required='N' />
+   <field name='StopSide' required='N' />
+   <field name='TrailBy' required='N' />
+   <field name='TrailBy' required='N' />
+   <field name='OCOLeg1LimitRate' required='N' />
+   <field name='OCOLeg2Type' required='N' />
+   <field name='OCOLeg2Side' required='N' />
+   <field name='OCOLeg2StopRate' required='N' />
+   <field name='OCOLeg2StopSide' required='N' />
+   <field name='OCOLeg2StopLimitRate' required='N' />
   </message>
   <message name='NewOrderList' msgcat='app' msgtype='E'>
    <field name='ListID' required='Y' />
@@ -1826,6 +1835,7 @@
   <message name='PositionReport' msgcat='app' msgtype='AP'>
    <field name='PosMaintRptID' required='Y' />
    <field name='PosReqID' required='N' />
+   <field name='ExecID' required='N' />
    <field name='PosReqType' required='N' />
    <field name='SubscriptionRequestType' required='N' />
    <field name='TotalNumPosReports' required='N' />
@@ -5936,6 +5946,8 @@
    <value enum='TOT' description='TOTAL_TRANSACTION_QTY' />
    <value enum='XM' description='CROSS_MARGIN_QTY' />
    <value enum='SPL' description='INTEGRAL_SPLIT' />
+   <value enum='OPN' description='OPEN_POSITION' />
+   <value enum='CLS' description='CLOSE_POSITION' />
   </field>
   <field number='704' name='LongQty' type='QTY' />
   <field number='705' name='ShortQty' type='QTY' />
@@ -6637,6 +6649,49 @@
   <field number='7559' name='OpenOrders' type='BOOLEAN'>
     <value enum='Y' description='YES' />
     <value enum='N' description='NO' />
+  </field>
+  <field number='7534' name='StopSide' type='CHAR'>
+   <value enum='1' description='Bid' />
+   <value enum='2' description='Offer' />
+  </field>
+  <field number='7587' name='TrailBy' type='PRICE' />
+  <field number='7540' name='OCOLeg1LimitRate' type='PRICE' />
+  <field number='7541' name='OCOLeg2Type' type='CHAR'>
+   <value enum='3' description='STOP' />
+   <value enum='4' description='STOP_LIMIT' />
+  </field>
+  <field number='7553' name='OCOLeg2Side' type='CHAR'>
+   <value enum='1' description='Buy' />
+   <value enum='2' description='Sell' />
+  </field>
+  <field number='7542' name='OCOLeg2StopRate' type='PRICE' />
+  <field number='7543' name='OCOLeg2StopSide' type='CHAR'>
+   <value enum='1' description='Bid' />
+   <value enum='2' description='Offer' />
+  </field>
+  <field number='7544' name='OCOLeg2StopLimitRate' type='PRICE' />
+
+  <field number='7569' name='IFDIfType' type='CHAR'>
+   <value enum='3' description='STOP' />
+   <value enum='4' description='STOP_LIMIT' />
+   <value enum='C' description='FOREX_MARKET' />
+   <value enum='F' description='FOREX_LIMIT' />
+  </field>
+  <field number='7570' name='IFDIfStopRate' type='PRICE' />
+  <field number='7535' name='IFDThenType' type='CHAR'>
+   <value enum='3' description='STOP' />
+   <value enum='4' description='STOP_LIMIT' />
+   <value enum='W' description='OCO' />
+  </field>
+  <field number='7536' name='IFDThenSide' type='CHAR'>
+   <value enum='1' description='Buy' />
+   <value enum='2' description='Sell' />
+  </field>
+  <field number='7537' name='IFDThenPrStopRate' type='PRICE' />
+  <field number='7538' name='IFDThenPrLimitRate' type='PRICE' />
+  <field number='7539' name='IFDThenPrStopSide' type='CHAR'>
+   <value enum='1' description='Bid' />
+   <value enum='2' description='Offer' />
   </field>
  </fields>
 </fix>
